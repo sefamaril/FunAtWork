@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FunAtWork.Core\FunAtWork.Core.csproj" />
+  </ItemGroup>
+
 </Project>
