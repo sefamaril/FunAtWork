@@ -1,0 +1,6 @@
+@FunAtWork.API_HostAddress = http://localhost:5129
+
+GET {{FunAtWork.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
