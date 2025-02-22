@@ -14,6 +14,22 @@ namespace FunAtWork.Infrastructure.Repositories
             _applicationDbContext = applicationDbContext;
             _dbSet = _applicationDbContext.Set<TEntity>();
         }
+
+        public async Task<IQueryable<TEntity>> GetAllAsync(FindOptions? findOptions = null)
+        {
+            var query = _dbSet.AsQueryable();
+            if (findOptions != null)
+            {
+                if (findOptions.IsIgnoreAutoIncludes)
+                    query = query.IgnoreAutoIncludes();
+
+                if (findOptions.IsAsNoTracking)
+                    query = query.AsNoTracking();
+            }
+
+            return await Task.FromResult(query);
+        }
+
         public async Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> predicate, FindOptions? findOptions = null)
         {
             var query = _dbSet.Where(predicate).AsQueryable();
@@ -30,24 +46,10 @@ namespace FunAtWork.Infrastructure.Repositories
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<IQueryable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate, FindOptions? findOptions = null)
+        public async Task<IQueryable<TEntity>> FinddAsync(Expression<Func<TEntity, bool>> predicate, FindOptions? findOptions = null)
         {
             var query = _dbSet.Where(predicate).AsQueryable();
 
-            if (findOptions != null)
-            {
-                if (findOptions.IsIgnoreAutoIncludes)
-                    query = query.IgnoreAutoIncludes();
-
-                if (findOptions.IsAsNoTracking)
-                    query = query.AsNoTracking();
-            }
-
-            return await Task.FromResult(query);
-        }
-        public async Task<IQueryable<TEntity>> GetAllAsync(FindOptions? findOptions = null)
-        {
-            var query = _dbSet.AsQueryable();
             if (findOptions != null)
             {
                 if (findOptions.IsIgnoreAutoIncludes)

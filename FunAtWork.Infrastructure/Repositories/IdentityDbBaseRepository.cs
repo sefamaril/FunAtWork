@@ -7,13 +7,13 @@ namespace FunAtWork.Infrastructure.Repositories
 {
     public class IdentityDbBaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        private readonly IdentityDbContext _context;
+        private readonly IdentityDbContext _identityDbContext;
         private readonly DbSet<TEntity> _dbSet;
 
-        public IdentityDbBaseRepository(IdentityDbContext context)
+        public IdentityDbBaseRepository(IdentityDbContext identityDbContext)
         {
-            _context = context;
-            _dbSet = _context.Set<TEntity>();
+            _identityDbContext = identityDbContext;
+            _dbSet = _identityDbContext.Set<TEntity>();
         }
 
         public async Task<IQueryable<TEntity>> GetAllAsync(FindOptions? findOptions = null)
@@ -67,32 +67,32 @@ namespace FunAtWork.Infrastructure.Repositories
         public async Task AddAsync(TEntity entity)
         {
             await _dbSet.AddAsync(entity);
-            await _context.SaveChangesAsync();
+            await _identityDbContext.SaveChangesAsync();
         }
 
         public async Task AddManyAsync(IEnumerable<TEntity> entities)
         {
             await _dbSet.AddRangeAsync(entities);
-            await _context.SaveChangesAsync();
+            await _identityDbContext.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(TEntity entity)
         {
             _dbSet.Update(entity);
-            await _context.SaveChangesAsync();
+            await _identityDbContext.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(TEntity entity)
         {
             _dbSet.Remove(entity);
-            await _context.SaveChangesAsync();
+            await _identityDbContext.SaveChangesAsync();
         }
 
         public async Task DeleteManyAsync(Expression<Func<TEntity, bool>> predicate)
         {
             var entitiesToRemove = await _dbSet.Where(predicate).ToListAsync();
             _dbSet.RemoveRange(entitiesToRemove);
-            await _context.SaveChangesAsync();
+            await _identityDbContext.SaveChangesAsync();
         }
 
         public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
