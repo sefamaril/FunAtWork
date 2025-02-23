@@ -46,7 +46,7 @@ namespace FunAtWork.Infrastructure.Repositories
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<IQueryable<TEntity>> FinddAsync(Expression<Func<TEntity, bool>> predicate, FindOptions? findOptions = null)
+        public async Task<IQueryable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate, FindOptions? findOptions = null)
         {
             var query = _dbSet.Where(predicate).AsQueryable();
 

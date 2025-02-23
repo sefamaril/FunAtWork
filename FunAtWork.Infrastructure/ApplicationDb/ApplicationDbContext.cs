@@ -1,14 +1,13 @@
 ﻿using FunAtWork.Core.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 
 namespace FunAtWork.Infrastructure.FunAtWorkDb
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) { }
-        
+
         public DbSet<ContestType> ContestTypes { get; set; }
         public DbSet<Contest> Contests { get; set; }
         public DbSet<Question> Questions { get; set; }
